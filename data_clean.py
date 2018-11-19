@@ -27,8 +27,7 @@ class DataLoader():
 		result_y = []
 		
 		for df in pd.read_csv(file, chunksize=self.chunksize):
-			print(df)
-
+			
 			#since most of rows in attribute_time column is null, we directly drop it 
 			df.drop(df.columns[6], axis=1, inplace=True)
 			
