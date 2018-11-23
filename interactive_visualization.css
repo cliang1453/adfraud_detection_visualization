@@ -1,0 +1,13 @@
+body 
+{
+  	font: 10px sans-serif;
+}
+.tile 
+{
+  shape-rendering: crispEdges;
+}
+.axis text
+{
+	font-size: 12px;
+	stroke: grey;
+}
