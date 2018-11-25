@@ -3,7 +3,8 @@ import argparse
 import numpy as np
 import pickle
 import matplotlib.pyplot as plt
-from xgboost import XGBClassifier
+import csv
+import os 
 
 def eval(predictions, y_test):
 	
@@ -21,6 +22,17 @@ def eval(predictions, y_test):
 	plt.xlabel('False Positive Rate')
 	plt.show()
 
+def write_csv(args, data, pred):
+ 
+	pred = np.expand_dims(np.array(pred), 1)
+	row = np.concatenate((np.array(data), pred), 1)
+	with open(os.path.splitext(args.test_data)[0] + '.csv', 'w') as f:
+		wr = csv.writer(f, quoting=csv.QUOTE_MINIMAL, lineterminator='\n')
+		wr.writerow(['ip', 'app', 'device', 'os', 'channel','click_scalar','is_attributed'])
+		for r in row:
+			wr.writerow(r)
+
+
 def main(args):
 	
 	model = pickle.load(open(args.model, 'rb'))
@@ -30,6 +42,9 @@ def main(args):
 	pred = model.predict(test_data)
 	binary_pred = [round(value) for value in pred]
 	eval(binary_pred, test_label)
+	write_csv(args, test_data, binary_pred)
+
+
 
 
 if __name__ == '__main__':

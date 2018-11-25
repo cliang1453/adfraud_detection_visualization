@@ -52,7 +52,7 @@ class DataLoader():
 			#write from dataframe to numpy array
 			y = np.array(df.is_attributed)
 			dummy = pd.get_dummies(df)
-			mat = np.array(dummy)
+			mat = np.array(dummy)[:, :-1]
 
 			# negative sampling
 			mat, y = self.negative_sampling(mat, y)
