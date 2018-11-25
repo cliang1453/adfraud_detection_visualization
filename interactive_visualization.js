@@ -202,7 +202,7 @@ function data_generation() {
 				channel: rows[i].channel,
 				click_time: rows[i].click_scalar,
 			});
-			y.push(rows[i].is_attributed);
+			y.push(+rows[i].is_attributed);
 		}
 		bar_chart_data = data_processing(X, y);
 		//draw the bar graph
