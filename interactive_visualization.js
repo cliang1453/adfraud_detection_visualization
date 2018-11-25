@@ -1,11 +1,6 @@
-//get the data ascending order
-data = data_generation();
-//get each bar of line graph
-bar_chart_data = data_processing(data.X, data.y);
-//draw the bar graph
-add_buttons(bar_chart_data);
-
 // calculate the most fraud lead values for each attribute
+data_generation()
+
 function data_processing(X, y) {
 	var statistics = {}
 	for (var attr in X[0]) {
@@ -15,7 +10,7 @@ function data_processing(X, y) {
 		if (y[i] == 0) {
 			for (var attr in X[i]) {
 				if (!statistics[attr].hasOwnProperty(X[i][attr])) {
-					statistics[attr][X[i][attr]] = 0;
+					statistics[attr][X[i][attr]] = 1;
 				}
 				statistics[attr][X[i][attr]]++;
 			}
@@ -181,7 +176,7 @@ function disappear() {
 }
 
 function data_generation() {
-	var X = 
+	/*var X = 
 	[
 		{ip: '0.0.0.0', app: 'abb', device: 'iphone X', os: 'iOS 12', channel: '025'},
 		{ip: '0.0.0.0', app: 'abb', device: 'Pixel 3', os: 'Android 8', channel: '995'},
@@ -193,7 +188,24 @@ function data_generation() {
 		{ip: '0.0.1.0', app: 'abb', device: 'iphone X', os: 'iOS 12', channel: '966'},
 		{ip: '0.1.0.0', app: 'bvv', device: 'Huawei mate 20pro', os: 'Android 8', channel: '774'}
 	]
-	var y = [0,0,0,1,0,1,0,0,0,1]
-
-	return {X: X, y: y};
+	var y = [0,0,0,1,0,1,0,0,0,1]*/
+	d3.csv("mat1.csv").then(function(rows) {
+		var X = [], y = [];
+		//console.log(rows);
+		//console.log(rows.length);
+		for (var i = 0; i < rows.length; i++) {
+			X.push({
+				ip: rows[i].ip, 
+				app: rows[i].app, 
+				device: rows[i].device, 
+				os: rows[i].os, 
+				channel: rows[i].channel,
+				click_time: rows[i].click_scalar,
+			});
+			y.push(rows[i].is_attributed);
+		}
+		bar_chart_data = data_processing(X, y);
+		//draw the bar graph
+		add_buttons(bar_chart_data);
+	})
 }	
