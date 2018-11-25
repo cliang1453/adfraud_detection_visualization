@@ -4,12 +4,15 @@ import matplotlib.pyplot as plt
 from sklearn.datasets import dump_svmlight_file
 import argparse
 import random
+import os
 
 class DataLoader():
 
-	def __init__(self):
+	def __init__(self, args):
 		self.chunksize = 5000
 		self.num_batch = 3000
+		self.test_batch = 200
+		self.args = args
 
 	def negative_sampling(self, mat, y):
 		
@@ -25,6 +28,7 @@ class DataLoader():
 
 		result_mat = []
 		result_y = []
+		cnt = 0
 		
 		for df in pd.read_csv(file, chunksize=self.chunksize):
 			
@@ -54,25 +58,39 @@ class DataLoader():
 			mat, y = self.negative_sampling(mat, y)
 			result_mat.append(mat)
 			result_y.append(y)
-			if len(result_mat) > self.num_batch:
+			
+			if cnt==0 and len(result_mat) > self.num_batch:
+				self.dump(result_mat, result_y, args.mat, args.y, cnt)
+				result_mat = []
+				result_y = []
+				cnt += 1
+				print('dump training set')
+
+			if cnt>0 and len(result_mat) > self.test_batch:
+				self.dump(result_mat, result_y, args.mat, args.y, cnt)
+				result_mat = []
+				result_y = []
+				cnt += 1
+				print('dump test set')
+
+			if cnt > 5: 
 				break
-		
-		result_mat = np.vstack(result_mat)	
-		result_y = np.concatenate(result_y)
-		return result_mat, result_y
-
-	
-	def dump(self, mat, y, mat_file, y_file):
-		mat.dump(mat_file)
-		y.dump(y_file)
 
 
+	def dump(self, mat, y, mat_file, y_file, cnt):
+		mat = np.vstack(mat)	
+		y = np.concatenate(y)
+		if cnt == 0:
+			mat.dump(mat_file)
+			y.dump(y_file)
+		else:
+			mat.dump(os.path.splitext(mat_file)[0] + str(cnt) + os.path.splitext(mat_file)[1])
+			y.dump(os.path.splitext(y_file)[0] + str(cnt) + os.path.splitext(y_file)[1])
 
 
 def main(args):
-	loader = DataLoader()
-	mat, y = loader.clean(args.file)
-	loader.dump(mat, y, args.mat, args.y)
+	loader = DataLoader(args)
+	loader.clean(args.file)
 
 
 if __name__ == "__main__":

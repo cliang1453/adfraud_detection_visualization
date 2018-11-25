@@ -5,25 +5,9 @@ from sklearn.datasets import load_svmlight_file
 from sklearn.ensemble import RandomForestClassifier
 import argparse
 import numpy as np
-import matplotlib.pyplot as plt
 from sklearn.model_selection import GridSearchCV
-
-def eval(predictions, y_test):
-	
-	# evaluate predictions
-	score = roc_auc_score(y_test, predictions)
-	fpr, tpr, thresholds = roc_curve(y_test, predictions, pos_label=1)
-	roc_auc = auc(fpr, tpr)
-
-	plt.title('ROC')
-	plt.plot(fpr, tpr, 'r', label = 'AUC = %0.2f' % roc_auc)
-	plt.legend(loc = 'lower right')
-	plt.xlim([0, 1])
-	plt.ylim([0, 1])
-	plt.ylabel('True Positive Rate')
-	plt.xlabel('False Positive Rate')
-	plt.show()
-
+import pickle
+from inference import eval
 
 def main(args):
 
@@ -57,6 +41,8 @@ def main(args):
 	y_pred = model.predict(X_test)
 	predictions = [round(value) for value in y_pred]
 	eval(predictions, y_test)
+
+	pickle.dump(model, open('models/model.pickle', 'wb'))
 	
 
 if __name__ == "__main__":
