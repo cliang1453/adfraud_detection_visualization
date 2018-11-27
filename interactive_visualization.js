@@ -80,7 +80,7 @@ function add_buttons(data) {
 			console.log(d);
 			d3.select(this).transition().duration(8).attr("fill", "grey");
 			
-			var bar_colors = ["#ffffd9","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#225ea8","#225ea8", "#225ea8"];
+			var bar_colors = ["#ffffd9","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#225ea8","#225ea8", "#225ea8", "#225ea8", "#225ea8"];
 			//draw_bar_chart(svg, d);
 			xScale = d3.scaleLinear()
 				.domain([0, d3.max(d.data, function(d) {
