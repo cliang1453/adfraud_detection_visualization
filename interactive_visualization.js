@@ -26,14 +26,25 @@ function data_processing(X, y) {
 			return 0;
 		}
 	}
+	var device_names = ["iOS", "Android", "Symbian", "Windows phone", "BlackberryOS"];
 	for (var attr in statistics) {
+		console.log(attr);
 		data = [];
+		var i = 0;
 		for (var item in statistics[attr]) {
-			data.push({name: item, count: statistics[attr][item]});
+			if (attr == "device") {
+				data.push({name: device_names[i], count: statistics[attr][item]});
+				i++;
+			} else {
+				data.push({name: item, count: statistics[attr][item]});
+			}
 		}
 		data.sort(comp);
-		data10 = data.slice(0, 11);
-		bar_chart_data.push({title: attr, data: data10});
+		data10 = data.slice(0, 10);
+		var attribute = attr;
+		if (attr == "os") attribute = "device";
+		else if (attr == "device") attribute = "os";
+		bar_chart_data.push({title: attribute, data: data10});
 	}
 
 	console.log(bar_chart_data);
@@ -80,7 +91,7 @@ function add_buttons(data) {
 			console.log(d);
 			d3.select(this).transition().duration(8).attr("fill", "grey");
 			
-			var bar_colors = ["#ffffd9","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#225ea8","#225ea8", "#225ea8", "#225ea8", "#225ea8"];
+			var bar_colors = ["#c7e9b4","#c7e9b4","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58", "#081d58"];
 			//draw_bar_chart(svg, d);
 			xScale = d3.scaleLinear()
 				.domain([0, d3.max(d.data, function(d) {
@@ -132,15 +143,15 @@ function add_buttons(data) {
 
 			bars.append("text")
 				.attr("class", "bar_number")
-				.attr("fill", "white")
+				.attr("fill", "black")
 				.attr("x", function(d) {
-					return 390+xScale(d.count);
+					return 405+xScale(d.count);
 				})
 				.attr("y", function(d, i) {
 					return 170+50*i;
 				})
 				.style("font-size", "14px")
-				.attr("text-anchor", "end")
+				.attr("text-anchor", "start")
 				.text(function(d) {
 					return d.count;
 				});
