@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<title>SignUp Template for Bootstrap </title>
+
+	<link href="bootstrap.min.css" rel="stylesheet">
+	<link href="interface.css" rel="stylesheet">
+
+</head>
+<body>
+    <div class="container">
+        
+        <center><h2 class="form-heading">Welcome to fraud clicking detector</h2></center>
+        <p></p>
+        <h4>Please input your click features:</h4>
+        <form class="form-submit-request" action="/predict" role="form" method="POST"></form>
+            ip address (only integer range in [0-100000]) <input type="ip" id="inputIp" name="ip" class="form-control" placeholder="ip" required autofocus>
+            app (only integer in [0-50]) <input type="app" id="inputApp" name="app" class="form-control" placeholder="app" required>   
+            OS (only integer in [0-5]) <input type="os" id="inputOs" name="os" class="form-control" placeholder="os" required>  
+            device (only integer in [0-50]) <input type="device" id="inputDevice" name="device" class="form-control" placeholder="device" required>      
+            channel (only integer in [0-500])<input type="channel" id="inputChannel" name="channel" class="form-control" placeholder="channel" required>  
+            clicktime <input type="clicktime" id="inputClicktime" name="clicktime" class="form-control" placeholder="clicktime" required>  
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+        </form>   
+        <button class="btn btn-lg btn-primary btn-block" type="button" href="/interactive_visualization">Show feature statistics of fraud clicks in our database</button>
+        
+        {% if post %}
+            <h3>Prediction:</h3>
+            {% if predict %}
+                <h3>This is a fraud click</h3>
+            {% else %}
+                <h3>This is a valid click</h3>
+            {% endif %}
+        {% endif %}
+    </div>  
+    <div id="msg"></div>
+</body>
+ 
+</html>
