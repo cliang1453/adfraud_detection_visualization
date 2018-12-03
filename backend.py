@@ -1,5 +1,5 @@
-from run import *
-from flask import Flask, request, json
+from run import model
+from flask import Flask, request, json, render_template
 app = Flask(__name__)
 @app.route('/result',methods = ['POST', 'GET'])
 def result():
