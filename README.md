@@ -13,3 +13,8 @@ python3 data_clean.py [csv_file] [output_data_file_path] [output_label_file_path
 Run following command to fit data and labels
 
 python3 run.py [data_file_path] [label_file_path] [method]
+
+3. To run flask
+Run following command:
+$ export FLASK_APP=client_interface.py
+$ flask run
