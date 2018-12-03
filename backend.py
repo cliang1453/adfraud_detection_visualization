@@ -1,9 +1,10 @@
-from run import model
 from flask import Flask, request, json, render_template
+import pickle
 app = Flask(__name__)
 @app.route('/result',methods = ['POST', 'GET'])
 def result():
     if request.method == 'GET':
+        model = pickle.load(open("models/model.pickle", 'rb'))
         attribute = []
         #convert string to int
         attribute.append(int(request.form['ip']))
