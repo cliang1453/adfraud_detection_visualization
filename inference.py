@@ -5,6 +5,9 @@ import pickle
 import matplotlib.pyplot as plt
 import csv
 import os 
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import accuracy_score, classification_report
+from sklearn.preprocessing import StandardScaler, normalize
 
 def eval(predictions, y_test):
 	
@@ -13,8 +16,8 @@ def eval(predictions, y_test):
 	fpr, tpr, thresholds = roc_curve(y_test, predictions, pos_label=1)
 	roc_auc = auc(fpr, tpr)
 
-	plt.title('ROC')
-	plt.plot(fpr, tpr, 'r', label = 'AUC = %0.2f' % roc_auc)
+	plt.title('Receiver Operating Characteristic Curve (ROC)')
+	plt.plot(fpr, tpr, 'r', label = 'Area Under the ROC Curve (AUC) = %0.4f' % roc_auc)
 	plt.legend(loc = 'lower right')
 	plt.xlim([0, 1])
 	plt.ylim([0, 1])
@@ -38,10 +41,15 @@ def main(args):
 	model = pickle.load(open(args.model, 'rb'))
 	test_data = pickle.load(open(args.test_data, 'rb'))
 	test_label = pickle.load(open(args.test_label, 'rb'))
+	if 'svm' in args.model or 'nn' in args.model:
+		scaler = StandardScaler().fit(test_data.astype(np.float64))
+		test_data = scaler.transform(test_data)
+		test_data = normalize(test_data)
 
 	pred = model.predict(test_data)
 	binary_pred = [round(value) for value in pred]
 	eval(binary_pred, test_label)
+	print(classification_report(test_label, binary_pred, digits=4))
 	write_csv(args, test_data, binary_pred)
 
 
@@ -49,11 +57,11 @@ def main(args):
 
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description='inference_file')
-	parser.add_argument('--test_data', type=str, default='data/mat1.pickle',
+	parser.add_argument('--test_data', type=str, default='data_unbalanced/mat3.pickle',
 	                    help='file_path')
-	parser.add_argument('--test_label', type=str, default='data/y1.pickle',
+	parser.add_argument('--test_label', type=str, default='data_unbalanced/y3.pickle',
 	                    help='file_path')
-	parser.add_argument('--model', type=str, default='models/model.pickle',
+	parser.add_argument('--model', type=str, default='models/model_xgboost.pickle',
 	                    help='model_path')
 	args = parser.parse_args()
 	main(args)

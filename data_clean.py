@@ -10,8 +10,8 @@ class DataLoader():
 
 	def __init__(self, args):
 		self.chunksize = 5000
-		self.num_batch = 3000
-		self.test_batch = 200
+		self.num_batch = 2000
+		self.test_batch = 400
 		self.args = args
 
 	def negative_sampling(self, mat, y):
@@ -23,11 +23,19 @@ class DataLoader():
 		np.random.shuffle(save)
 
 		return mat[save], y[save] 
+
+	def random_sampling(self, mat, y, l):
+
+		save = np.random.choice(len(mat), l)
+		np.random.shuffle(save)
+
+		return mat[save], y[save] 
+
 	
 	def clean(self, file):
 
-		result_mat = []
-		result_y = []
+
+		result_mat_b, result_y_b, result_mat_ub, result_y_ub = [], [], [], []
 		cnt = 0
 		
 		for df in pd.read_csv(file, chunksize=self.chunksize):
@@ -54,24 +62,20 @@ class DataLoader():
 			dummy = pd.get_dummies(df)
 			mat = np.array(dummy)[:, :-1]
 
-			# negative sampling
-			mat, y = self.negative_sampling(mat, y)
-			result_mat.append(mat)
-			result_y.append(y)
-			
-			if cnt==0 and len(result_mat) > self.num_batch:
-				self.dump(result_mat, result_y, args.mat, args.y, cnt)
-				result_mat = []
-				result_y = []
-				cnt += 1
-				print('dump training set')
 
-			if cnt>0 and len(result_mat) > self.test_batch:
-				self.dump(result_mat, result_y, args.mat, args.y, cnt)
-				result_mat = []
-				result_y = []
+			mat_b, y_b = self.negative_sampling(mat, y)
+			mat_ub, y_ub = self.random_sampling(mat, y, len(y_b))
+			result_mat_b.append(mat_b)
+			result_y_b.append(y_b)
+			result_mat_ub.append(mat_ub)
+			result_y_ub.append(y_ub)
+
+			if (cnt==0 and len(result_mat_b) > self.num_batch) or (cnt>0 and len(result_mat_b) > self.test_batch):
+				self.dump(result_mat_b, result_y_b, args.mat_b, args.y_b, cnt)
+				self.dump(result_mat_ub, result_y_ub, args.mat_ub, args.y_ub, cnt)
+				result_mat_b, result_y_b, result_mat_ub, result_y_ub = [], [], [], []
 				cnt += 1
-				print('dump test set')
+				print('=======Dump Set=======')
 
 			if cnt > 5: 
 				break
@@ -97,9 +101,13 @@ if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description='file_reader.')
 	parser.add_argument('--file', type=str, default='data/train.csv',
 	                    help='file_path')
-	parser.add_argument('--mat', type=str, default='data/mat.pickle',
+	parser.add_argument('--mat_ub', type=str, default='data_unbalanced/mat.pickle',
 	                    help='file_path')
-	parser.add_argument('--y', type=str, default='data/y.pickle',
+	parser.add_argument('--mat_b', type=str, default='data_balanced/mat.pickle',
+	                    help='file_path')
+	parser.add_argument('--y_ub', type=str, default='data_unbalanced/y.pickle',
+	                    help='file_path')
+	parser.add_argument('--y_b', type=str, default='data_balanced/y.pickle',
 	                    help='file_path')
 	args = parser.parse_args()
 	main(args)
