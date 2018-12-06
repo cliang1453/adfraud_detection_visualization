@@ -22,5 +22,5 @@ python3 inference.py --test_data=[data_file_path/xxx.pickle] --test_label=[label
 
 4. To run flask
 Run following command:
-$ export FLASK_APP=client_interface.py
+$ export FLASK_APP=backend.py
 $ flask run
