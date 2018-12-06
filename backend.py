@@ -8,7 +8,7 @@ def hello():
 @app.route('/predict',methods = ['POST', 'GET'])
 def result():
     if request.method == 'POST':
-        model = pickle.load(open("models/model.pickle", 'rb'))
+        model = pickle.load(open("model/model_xgboost.pickle", 'rb'))
         print(request.form)
         attribute = []
         #convert string to int
