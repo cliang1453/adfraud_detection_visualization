@@ -20,3 +20,6 @@ def result():
         attribute.append(int(request.form['clicktime']))
         predict = model.predict(attribute)
         return render_template("client_interface.html", label = predict, post = True)
+
+if __name__ == "__main__":
+    app.run()
