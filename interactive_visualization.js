@@ -26,7 +26,7 @@ function data_processing(X, y) {
 			return 0;
 		}
 	}
-	var device_names = ["iOS", "Android", "Symbian", "Windows phone", "BlackberryOS"];
+	var device_names = ["Android", "iOS", "Symbian", "Windows phone", "BlackberryOS"];
 	for (var attr in statistics) {
 		console.log(attr);
 		data = [];
@@ -63,7 +63,7 @@ function add_buttons(data) {
 		//.attr("transform", "translate("+margin.left+","+margin.top+")");
 	//bars contains all the data
 	var title = svg.append("text")
-		.attr("x", margin.left+width/2)
+		.attr("x", margin.left/2+width/2)
 		.attr("y", margin.top/2)
 		.attr("fill", "black")
 		.style("font-size", "30px")
@@ -82,7 +82,7 @@ function add_buttons(data) {
 		.attr("fill", function(d, i) {
 			return colors[i%10];
 		})
-		.attr("cx", 100)
+		.attr("cx", 200)
 		.attr("cy", function(d, i) {
 			return margin.top/2+(i+1)*100;
 		})
@@ -166,7 +166,7 @@ function add_buttons(data) {
 	//show numbers in the bar
 	buttons.append("text")
 		.attr("fill", "white")
-		.attr("x", 100)
+		.attr("x", 200)
 		.attr("y", function(d, i){
 			return (i+1)*100+5+margin.top/2;
 		})
@@ -200,7 +200,7 @@ function data_generation() {
 		{ip: '0.1.0.0', app: 'bvv', device: 'Huawei mate 20pro', os: 'Android 8', channel: '774'}
 	]
 	var y = [0,0,0,1,0,1,0,0,0,1]*/
-	d3.csv("mat1.csv").then(function(rows) {
+	d3.csv("mat3.csv").then(function(rows) {
 		var X = [], y = [];
 		//console.log(rows);
 		//console.log(rows.length);
