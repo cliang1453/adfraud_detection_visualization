@@ -21,5 +21,9 @@ def result():
         predict = model.predict(attribute)
         return render_template("client_interface.html", label = predict, post = True)
 
+@app.route('/statistics')
+def show():
+    return render_template('interactive_visualization.html')
+
 if __name__ == "__main__":
     app.run()
