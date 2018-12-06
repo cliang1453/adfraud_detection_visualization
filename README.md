@@ -22,5 +22,5 @@ python3 inference.py --test_data=[data_file_path/xxx.pickle] --test_label=[label
 
 4. To run flask
 Run following command:
-$ export FLASK_APP=backend.py
-$ flask run
+python backend.py
+then open http://127.0.0.1:5000/ to browse the website
