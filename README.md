@@ -3,6 +3,7 @@
 DESCRIPTION
 
 backend.py - the file contains flask app which serves as a restful api connect frontend visualization and backend model.
+
 /templates/interactive_visualization.html – show the feature statistics of fraud clicks
 
 /templates/client_interface.html – the UI that ask the client to provide feature values of a click
@@ -35,3 +36,13 @@ EXECUTION
 Run following command:
 python backend.py,
 then open http://127.0.0.1:5000/ to browse the website
+
+Please note since all the test data are encoded, we can only accept integer input. Below is a table indicating the correspondence between the real value and integer encoded value for each feature:
+os
+|Real Value|Encoded Integer|
+|:---:|:---:|
+|Android|0|
+|iOS|1|
+|Symbian|2|
+|Windows Phone|3|
+|BlackberryOS|4|
