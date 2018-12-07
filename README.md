@@ -2,13 +2,10 @@
 
 DESCRIPTION
 
-backend.py - the file contains flask app which serves as a restful api connect frontend visualization and backend model.
-
-/templates/interactive_visualization.html – show the feature statistics of fraud clicks
-
-/templates/client_interface.html – the UI that ask the client to provide feature values of a click
-
-/static/js/intercative_visualization.js – the d3 code for statistics visualization
+backend.py - the file contains flask app which serves as a restful api connect frontend visualization and backend model.  
+/templates/interactive_visualization.html – show the feature statistics of fraud clicks  
+/templates/client_interface.html – the UI that ask the client to provide feature values of a click  
+/static/js/intercative_visualization.js – the d3 code for statistics visualization  
 
 
 INSTALLATION
