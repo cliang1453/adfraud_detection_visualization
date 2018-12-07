@@ -48,4 +48,16 @@ ip:
 143.215.81.10: 1
 69.63.176.0: 2
 209.191.88.254: 3
-
+device:
+Samsung S9: 1
+iPhone X: 2
+iPhone XR: 3
+Pixel 3: 4
+Sony Xperia XZ3: 5
+app:
+Tik Tok: 1
+Yelp: 2
+Airbnb: 3
+Uber: 4
+Chrome: 5
+Tumblr: 6
