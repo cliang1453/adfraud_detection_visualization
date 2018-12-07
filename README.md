@@ -39,8 +39,13 @@ then open http://127.0.0.1:5000/ to browse the website
 
 Please note since all the test data are encoded, we can only accept integer input. Below is a table indicating the correspondence between the real value and integer encoded value for each feature:
 os:
-Android: 0
-iOS: 1
-Symbian: 2
-Windows Phone: 3
-BlackberryOS: 4
+Android: 1
+iOS: 2
+Symbian: 3
+Windows Phone: 4
+BlackberryOS: 5
+ip:
+143.215.81.10: 1
+69.63.176.0: 2
+209.191.88.254: 3
+
