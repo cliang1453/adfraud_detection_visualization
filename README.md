@@ -34,7 +34,7 @@ Run following command:
 python backend.py,
 then open http://127.0.0.1:5000/ to browse the website
 
-Please note since all the test data are encoded, we can only accept integer input. Below is a table indicating the correspondence between the real value and integer encoded value for each feature:
+Please note since all the test data are encoded, we can only accept integer input. Below is a table indicating the correspondence between the real value and integer encoded value for each feature:  
 os:  
 Android: 1  
 iOS: 2  
