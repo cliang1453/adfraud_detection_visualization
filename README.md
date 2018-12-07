@@ -1,13 +1,15 @@
 # Adclick Fraud Detection Visualisation #
 
-Description
+DESCRIPTION
 
 backend.py : the file contains flask app which serves as a restful api connect frontend visualization and backend model.
+/templates/interactive_visualization.html – show the feature statistics of fraud clicks
+/templates/client_interface.html – the UI that ask the client to provide feature values of a click
+/static/js/intercative_visualization.js – the d3 code for statistics visualization
 
 
 
-Installation and Execution
-
+INSTALLATION
 
 1. Data cleaning
 
@@ -27,7 +29,7 @@ Run following command to inference the pretrained model on test sets, visualize 
 
 python3 inference.py --test_data=[data_file_path/xxx.pickle] --test_label=[label_file_path/xxx.pickle] --model=[pretrained_model_path/xxx.pickle]
 
-4. Run flask app
+EXECUTION
 
 Run following command:
 python backend.py,
